@@ -144,7 +144,7 @@ public class WikiSearch {
 		Map<String, Integer> map = index.getCounts(term);
 		return new WikiSearch(map);
 	}
-
+	
 	public static void main(String[] args) throws IOException {
 		
 		// make a JedisIndex
@@ -193,6 +193,7 @@ public class WikiSearch {
 //		System.out.println("Query: " + term1 + " AND " + term2);
 //		WikiSearch intersection = search1.and(search2);
 //		intersection.print();
+
 		
 		boolean AND = true;
 		boolean OR = false;
@@ -210,8 +211,10 @@ public class WikiSearch {
 		}
 		System.out.println(searches.size());
 		
-		for(String ws : words)
-				System.out.println(ws);
+		for(String ws : words){
+		
+			System.out.println(ws);
+		}
 		WikiSearch result = searches.get(0);
 		for(int i = 1 ; i < searches.size(); i++){
 			if (OR == true)
