@@ -19,11 +19,13 @@ import org.jsoup.select.Elements;
 public class TermCounter {
 	
 	private Map<String, Integer> map;
+	public Map<String,Double> percentageMap; 
 	private String label;
 	
 	public TermCounter(String label) {
 		this.label = label;
 		this.map = new HashMap<String, Integer>();
+		this.percentageMap = new HashMap<String,Double>();
 	}
 	
 	public String getLabel() {
@@ -82,6 +84,8 @@ public class TermCounter {
 			String term = array[i];
 			incrementTermCount(term);
 		}
+		
+		percentageTermCount();
 	}
 
 	/**
@@ -94,6 +98,12 @@ public class TermCounter {
 		put(term, get(term) + 1);
 	}
 
+	public void percentageTermCount() {
+		for(String term: map.keySet()) {
+			int numTimes = map.get(term);
+			percentageMap.put(term, (double)numTimes/size());
+		}
+	}
 	/**
 	 * Adds a term to the map with a given count.
 	 * 
@@ -115,6 +125,17 @@ public class TermCounter {
 		return count == null ? 0 : count;
 	}
 
+	/**
+	 * Returns the count associated with this term, or 0 if it is unseen.
+	 * 
+	 * @param term
+	 * @return
+	 */
+	public Double getPercentage(String term) {
+		Double count = percentageMap.get(term);
+		return count == null ? 0 : count;
+	}
+	
 	/**
 	 * Returns the set of terms that have been counted.
 	 * 

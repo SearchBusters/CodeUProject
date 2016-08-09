@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.*;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import redis.clients.jedis.Jedis;
 
@@ -148,10 +150,24 @@ public class WikiSearch {
 		// make a JedisIndex
 		Jedis jedis = JedisMaker.make();
 		JedisIndex index = new JedisIndex(jedis); 
+//		final  WikiFetcher wf = new WikiFetcher(); 
 		
 		String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		WikiCrawler wc = new WikiCrawler(source,index);
-				
+		
+		// for testing purposes, load up the queue
+//		Elements paragraphs = wf.fetchWikipedia(source);
+//		wc.queueInternalLinks(paragraphs);
+
+		// loop until we index a new page
+		String res;
+		do {
+			res = wc.crawl(false);
+
+            // REMOVE THIS BREAK STATEMENT WHEN crawl() IS WORKING
+            break;
+		} while (res == null);
+		
 		Scanner scan = new Scanner(System.in); 
 		String word = scan.nextLine();
 		System.out.println(word);
