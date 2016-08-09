@@ -162,10 +162,11 @@ public class WikiSearch {
 		// loop until we index a new page
 		String res;
 		do {
+			System.out.println("before crawl");
 			res = wc.crawl(false);
-
+			System.out.println("after crawl");
             // REMOVE THIS BREAK STATEMENT WHEN crawl() IS WORKING
-            break;
+            //break;
 		} while (res == null);
 		
 		Scanner scan = new Scanner(System.in); 
