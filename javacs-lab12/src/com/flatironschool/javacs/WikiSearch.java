@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.*;
 
+
 import redis.clients.jedis.Jedis;
 
 
@@ -149,6 +150,9 @@ public class WikiSearch {
 		Jedis jedis = JedisMaker.make();
 		JedisIndex index = new JedisIndex(jedis); 
 		
+		String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
+		WikiCrawler wc = new WikiCrawler(source,index);
+				
 		Scanner scan = new Scanner(System.in); 
 		String word = scan.nextLine();
 		System.out.println(word);
