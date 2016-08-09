@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.*;
 
 import redis.clients.jedis.Jedis;
 
@@ -148,21 +149,53 @@ public class WikiSearch {
 		Jedis jedis = JedisMaker.make();
 		JedisIndex index = new JedisIndex(jedis); 
 		
-		// search for the first term
-		String term1 = "java";
-		System.out.println("Query: " + term1);
-		WikiSearch search1 = search(term1, index);
-		search1.print();
+		Scanner scan = new Scanner(System.in); 
+		String word = scan.nextLine();
+		System.out.println(word);
+
 		
-		// search for the second term
-		String term2 = "programming";
-		System.out.println("Query: " + term2);
-		WikiSearch search2 = search(term2, index);
-		search2.print();
+//		// search for the first term
+//		String term1 = "java";
+//		System.out.println("Query: " + term1);
+//		WikiSearch search1 = search(term1, index);
+//		search1.print();
+//		
+//		// search for the second term
+//		String term2 = "programming";
+//		System.out.println("Query: " + term2);
+//		WikiSearch search2 = search(term2, index);
+//		search2.print();
+//		
+//		// compute the intersection of the searches
+//		System.out.println("Query: " + term1 + " AND " + term2);
+//		WikiSearch intersection = search1.and(search2);
+//		intersection.print();
 		
-		// compute the intersection of the searches
-		System.out.println("Query: " + term1 + " AND " + term2);
-		WikiSearch intersection = search1.and(search2);
-		intersection.print();
+		boolean AND = true;
+		boolean OR = false;
+		String[] words = word.split(" ");
+		ArrayList<WikiSearch> searches = new ArrayList<WikiSearch>();
+		for(int i = 0 ; i < words.length; i++) {
+			if (words[i].equalsIgnoreCase("and"))
+				continue;
+			if(words[i].equalsIgnoreCase("or")){
+				OR = true;
+				AND = false;
+			}
+			else
+				searches.add( search(words[i],index));
+		}
+		System.out.println(searches.size());
+		
+		for(String ws : words)
+				System.out.println(ws);
+		WikiSearch result = searches.get(0);
+		for(int i = 1 ; i < searches.size(); i++){
+			if (OR == true)
+				result = result.or(searches.get(i));
+			else
+			result = result.and(searches.get(i));
+		}
+		result.print();
 	}
 }
