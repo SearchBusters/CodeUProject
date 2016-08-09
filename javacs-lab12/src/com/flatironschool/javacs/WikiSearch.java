@@ -150,14 +150,14 @@ public class WikiSearch {
 		// make a JedisIndex
 		Jedis jedis = JedisMaker.make();
 		JedisIndex index = new JedisIndex(jedis); 
-//		final  WikiFetcher wf = new WikiFetcher(); 
+		final  WikiFetcher wf = new WikiFetcher(); 
 		
 		String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		WikiCrawler wc = new WikiCrawler(source,index);
 		
 		// for testing purposes, load up the queue
-//		Elements paragraphs = wf.fetchWikipedia(source);
-//		wc.queueInternalLinks(paragraphs);
+		Elements paragraphs = wf.fetchWikipedia(source);
+		wc.queueInternalLinks(paragraphs);
 
 		// loop until we index a new page
 		String res;
@@ -165,6 +165,7 @@ public class WikiSearch {
 			System.out.println("before crawl");
 			res = wc.crawl(false);
 			System.out.println("after crawl");
+			System.out.println(res);
             // REMOVE THIS BREAK STATEMENT WHEN crawl() IS WORKING
             //break;
 		} while (res == null);

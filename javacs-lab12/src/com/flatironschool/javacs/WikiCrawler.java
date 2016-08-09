@@ -55,6 +55,7 @@ public class WikiCrawler {
 	 */
 	public String crawl(boolean testing) throws IOException {
          if (queue.isEmpty()) {
+		System.out.println("queue is empty");
            	 return null;
          }
         String url = queue.poll();
