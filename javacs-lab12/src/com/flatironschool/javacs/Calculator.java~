@@ -13,7 +13,7 @@ public class Calculator{
 	}
 	
 	double idf(String s){
-			return Math.log(index.counter/jedis.getURLs(s).length);
+			return Math.log(index.counter/jedis.getURLs(s).size());
 		}
 		
 	double tf_idf(String s){

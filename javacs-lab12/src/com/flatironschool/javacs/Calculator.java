@@ -20,4 +20,8 @@ public class Calculator{
 		return idf(s) * counter.getPercentage(s);
 	}
 	
+	
+	public static void main(String[] args){
+		System.out.println("Is it working???");
+	}
 }
